@@ -13,8 +13,16 @@ public class RecursiveMethods {
 	 */
 	public static double geometricSum(int n) {
 		
-			// FIXME compute the geometric sum for the first n terms recursively
+		//base case
+		if (n == 0) {
 			return 0;
+		}
+			
+        // calculate the sum each time
+        double ans = 1 / (double)Math.pow(2, n) + geometricSum(n - 1);
+ 
+        // return final answer
+        return ans;
 		
 	}
 
@@ -27,9 +35,12 @@ public class RecursiveMethods {
 	 * @return greatest common divisor of p and q
 	 */
 	public static int gcd(int p, int q) {
-		
-			// FIXME compute the gcd of p and q using recursion
-			return 0;
+		// inverted base case. equivalent to 'while q != 0'
+		 if (q != 0) {
+			 return gcd(q, p % q);
+		 }
+		 
+	     return p;
 		
 	}
 
@@ -43,9 +54,28 @@ public class RecursiveMethods {
 	 */
 	public static int[] toReversed(int[] array) {
 		
-			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
+			int[] arrayFlippedCopy = new int[array.length]; // create a new array to be mutated by the helper method
+			return toReversedHelper(arrayFlippedCopy, array, 0); // return a call to only the helper method with the array to be mutated
 		
+	}
+	
+	public static int[] toReversedHelper(int[] arrayFlippedCopy, int[] array,  int index) {
+		// base case final index:
+		if (index >= array.length) {
+			return arrayFlippedCopy;
+		}
+		
+		//fill the reflected index of the copied array with the current index of the original array:
+		arrayFlippedCopy[arrayFlippedCopy.length-index-1] = array[index];
+		// Return with the next index:
+		return toReversedHelper(arrayFlippedCopy, array, index + 1);
+		
+		
+		
+		
+		
+		
+	
 	}
 
 	/**
@@ -59,8 +89,20 @@ public class RecursiveMethods {
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius,
 			double radiusMinimumDrawingThreshold) {
-		
-		// FIXME
+		//base case
+		if (radius <= radiusMinimumDrawingThreshold) {
+			return;
+		}
+		//draw!!
+		StdDraw.circle(xCenter, yCenter, radius);
+		//above
+		circlesUponCircles(xCenter, yCenter-radius, radius/3.0, radiusMinimumDrawingThreshold);
+		//right
+		circlesUponCircles(xCenter+radius, yCenter, radius/3.0, radiusMinimumDrawingThreshold);
+		//left
+		circlesUponCircles(xCenter-radius, yCenter, radius/3.0, radiusMinimumDrawingThreshold);
+		//below
+		circlesUponCircles(xCenter, yCenter+radius, radius/3.0, radiusMinimumDrawingThreshold);
 	}
 
 }
